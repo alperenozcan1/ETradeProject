@@ -21,11 +21,24 @@ namespace Business.Concrete
 
         public async Task AddProductAsync(AddProductDto addProductDto)
         {
+            if (string.IsNullOrEmpty(addProductDto.ProductName) || addProductDto.ProductName.Length < 2 )
+            {             
+                throw new Exception("Product name must be at least 2 characters long.");
+            }
+            else if(addProductDto.UnitPrice<5)
+            {
+                throw new Exception("Product price is must be more expensive the 5TL");
+            }
+
             await _productRepository.AddProductAsync(addProductDto);
         }
 
         public Task<bool> DeleteProductAsync(DeleteProductDto deleteProductDto)
         {
+            if (deleteProductDto.Id < 1)
+            {
+                throw new Exception("Invalid ID value");
+            }
             return _productRepository.DeleteProductAsync(deleteProductDto);
         }
 

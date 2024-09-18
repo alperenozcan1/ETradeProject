@@ -26,6 +26,10 @@ namespace Business.Concrete
 
         public async Task AddCategoryAsync(AddCategoryDto addCategoryDto)
         {
+            if (addCategoryDto.CategoryName.Length < 2)
+            {
+                throw new Exception("Category name must be at least 2 characters long. ");
+            }
            await _categoryRepository.AddCategoryAsync(addCategoryDto);
         }
 

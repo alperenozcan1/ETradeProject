@@ -19,13 +19,16 @@ namespace Business.Concrete
             _customerRepository = customerRepository;
         }
 
-        //public void Add(Customer customer)
-        //{
-        //    _customerRepository.Add(customer);
-        //}
-
         public async Task AddCustomerAsync(AddCustomerDto addCustomerDto)
         {
+            if (addCustomerDto.CustomerName.Length < 3)
+            {
+                throw new Exception("Customer name must be at least 3 characters");
+            }
+            else if (addCustomerDto.CustomerPhone.Length != 10)
+            {
+                throw new Exception("Invalid Phone Number");
+            }
             await _customerRepository.AddCustomerAsync(addCustomerDto);
         }
 
